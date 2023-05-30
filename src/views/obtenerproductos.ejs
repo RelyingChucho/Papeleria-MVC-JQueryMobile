@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Papeleria</title>
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <style>
+    .ui-page {
+      background-color: #f0f0f0;
+    }
+
+    .ui-content {
+      padding: 15px;
+    }
+
+    .ui-table th,
+    .ui-table td {
+      border: 1px solid #105353;
+    }
+
+    .ui-table th {
+      background-color: #105353;
+      color: #fff;
+      text-align: center;
+    }
+
+    .ui-table td {
+      text-align: center;
+    }
+    
+    /* Estilo para el borde horizontal */
+  table.ui-responsive.table-stroke {
+    border-collapse: collapse;
+  }
+
+  table.ui-responsive.table-stroke th,
+  table.ui-responsive.table-stroke td {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  table.ui-responsive.table-stroke th:first-child,
+  table.ui-responsive.table-stroke td:first-child {
+    border-left: 1px solid #000;
+  }
+
+  table.ui-responsive.table-stroke th:last-child,
+  table.ui-responsive.table-stroke td:last-child {
+    border-right: 1px solid #000;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row col-lg-12">
+      <!--Aqui va la barra de navegacion-->
+      <div data-role="header">
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Inicio</a>
+        <h1>Papeleria</h1>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-search ui-btn-icon-left">Buscar</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-5 mx-auto">
+        <!--Aqui va el formulario de registro-->
+        <div class="card">
+          <div class="card-body">
+            <form action="/insertarProducto" method="post">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label for="txtCodigoBarras" class="form-label">Codigo de Barras</label>
+                  <input type="text" id="txtCodigoBarras" class="form-control" name="codigobarras">
+                </div>
+                <div class="col-lg-8">
+                  <label for="txtDescripcion" class="form-label">Descripcion</label>
+                  <input type="text" id="txtDescripcion" class="form-control" name="descripcion">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label for="txtMarca" class="form-label">Marca</label>
+                  <input type="text" id="txtMarca" class="form-control" name="marca">
+                </div>
+                <div class="col-lg-6">
+                  <label for="txtprecioC" class="form-label">Precio Compra</label>
+                  <input type="number" id="txtPrecioC" class="form-control" name="preciocompra">
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <label for="txtPrecioV" class="form-label">Precio Venta</label>
+                  <input type="number" id="txtPrecioV" class="form-control" name="precioventa">
+                </div>
+                <div class="col-lg-6">
+                  <label for="txtExistencias" class="form-label">Existencias</label>
+                  <input type="number" id="txtExistencias" class="form-control" name="existencias">
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <div class="col-lg-3">
+                    <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left">Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div style="height: 400px; overflow-y: auto;">
+          <!--Aqui va la tabla-->
+        <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+          <caption>Productos</caption>
+          <thead>
+            <!--Encabezado-->
+            <tr>
+              <th data-priority="1">Codigo de Barras</th>
+              <th data-priority="2">Descripcion</th>
+              <th data-priority="3">Marca</th>
+              <th data-priority="4">Precio Compra</th>
+              <th data-priority="5">Precio Venta</th>
+              <th data-priority="6">Existencias</th>
+              <th colspan="2">Operaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Cuerpo -->
+            <% productos.forEach(producto=>{ %>
+            <tr>
+              <td>
+                <%= producto.codigobarras %>
+              </td>
+              <td>
+                <%= producto.descripcion %>
+              </td>
+              <td>
+                <%= producto.marca %>
+              </td>
+              <td>
+                <%= producto.preciocompra %>
+              </td>
+              <td>
+                <%= producto.precioventa %>
+              </td>
+              <td>
+                <%= producto.existencias %>
+              </td>
+              <td>
+                <a href="/<%= producto.codigobarras %>"
+                  class="ui-btn ui-corner-all ui-shadow ui-icon-edit ui-btn-icon-notext"></a>
+              </td>
+              <td>
+                <a href="/eliminar/<%= producto.codigobarras %>"
+                  class="ui-btn ui-corner-all ui-shadow ui-icon-delete ui-btn-icon-notext"></a>
+              </td>
+            </tr>
+            <%}) %>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
